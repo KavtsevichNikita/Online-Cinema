@@ -159,3 +159,71 @@ option{
   font-size: 19px;
   line-height: 22px;
 }
+.scheme{
+  margin-bottom: 40px;
+  background: rgba(36, 36, 36, 0.18);
+  border-radius: 10px;
+}
+.scheme path:not(.light){
+  cursor: pointer;
+  fill: rgba(255, 255, 255, 0.2);
+}
+.scheme path:not(.light):hover {
+  fill: rgba(255, 255, 255, 0.5);
+}
+.scheme path.active,
+.scheme path.active:hover {
+
+  fill: #FE8E05;
+}
+.scheme path.booked,
+.scheme path.booked:hover{
+
+  fill: rgba(255, 255, 255, 0.05);
+  cursor: not-allowed;
+}
+.legend{
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  max-height: 1024px;
+  margin: auto;
+  padding-top: 22px;
+  padding-bottom: 32px;
+}
+.legend-label{
+  margin-right: 30px;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.5) 
+}
+.legend svg{
+  margin-right: 15px;
+}
+.price{
+  padding-top: 20px;
+  padding-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.price-label{
+  display: block;
+  font-size: 18px;
+  line-height: 21px;
+}
+.price-tag{
+  font-size: 52px;
+  line-height: 61px;
+}
+.button{
+  display: block;
+  background: #FE8E05;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  padding: 24px 52px;
+  text-decoration: none;
+}
