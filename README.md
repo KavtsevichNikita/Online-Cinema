@@ -1,10 +1,9 @@
-# Docker Node MongoDB Example
+# Docker Node MongoDB Progect
 
-> Simple example of a dockerized Node/Mongo app
+## Project running.
+## Open your web browser and go to http://localhost:3000 to view the Online Cinema App.
 
-![Image](https://i.ibb.co/4Fgt31L/demo.gif)
-
-## Quick Start
+### Quick Start
 
 ```bash
 # Run in Docker
@@ -13,9 +12,6 @@ docker-compose up
 
 # Tear down
 docker-compose down
-
-# To be able to edit files, add volume to compose file
-volumes: ['./:/usr/src/app']
 
 # To re-build
 docker-compose build
