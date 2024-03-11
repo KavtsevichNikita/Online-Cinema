@@ -11,6 +11,112 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .form_container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .form-group input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .comment-card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+      position: relative;
+      height: 150px;
+    }
+
+    .comment-card h3 {
+      margin: 0;
+    }
+
+    .comment-card .comment {
+      margin-bottom: 10px;
+    }
+
+    .comment-card .rating {
+      margin-top: 10px;
+    }
+
+    .comment-card .rating span {
+      color: #f0a500;
+    }
+
+    .delete-comment {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 150px;
+      height: 50px;
+      cursor: pointer;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .delete-comment:hover {
+      color: #fff;
+      background-color: red;
+    }
+
+    .edit-comment {
+      position: absolute;
+      top: 60px;
+      right: 5px;
+      width: 150px;
+      height: 50px;
+      cursor: pointer;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+  </style>
 </head>
 
 <body>
@@ -39,7 +145,7 @@
         </ul>
       </nav>
       <div class="user">
-        <span>Hello, Mikita</span>
+        <span>Hello, User</span>
         <img class="avatar" src="" alt="avatar">
       </div>
     </div>
@@ -299,64 +405,169 @@
   <div class="price container">
     <div class="price-tag">
       <span class="price-label">Total to pay</span>
-      <span class="price-total">0</span><span class="ruble">₽</span>
+      <span class="price-total">0</span><span class="ruble">$</span>
     </div>
 
     <a href="#" class="button button-pay">Pay</a>
   </div>
-  <h1>Add your comments</h1>
-    
-    <form id="todoForm">
-        <input type="text" id="todoText" placeholder="Enter your comment...">
-        <button type="submit">Comment</button>
+
+  <div class="form_container">
+    <h1>Add your comments</h1>
+    <form id="commentForm">
+      <div class="form-group">
+        <label for="nameInput">Your name:</label>
+        <input type="text" id="nameInput" placeholder="Your name...">
+      </div>
+      <div class="form-group">
+        <label for="commentInput">Enter your comment:</label>
+        <input type="text" id="commentInput" placeholder="Enter your comment...">
+      </div>
+      <div class="form-group">
+        <label for="ratingInput">Rating (0-10):</label>
+        <input type="number" id="ratingInput" min="0" max="10" placeholder="Rating (0-10)">
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Comment">
+      </div>
     </form>
 
-    <ul id="todoList">
+    <div id="commentList"></div>
+  </div>
 
-    </ul>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const form = document.getElementById('commentForm');
+      const nameInput = document.getElementById('nameInput');
+      const commentInput = document.getElementById('commentInput');
+      const ratingInput = document.getElementById('ratingInput');
+      const commentList = document.getElementById('commentList');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const form = document.getElementById('todoForm');
-            const todoText = document.getElementById('todoText');
-            const todoList = document.getElementById('todoList');
+      function createCommentCard(comment) {
+        const card = document.createElement('div');
+        card.classList.add('comment-card');
 
-            const response = await fetch('/todos');
-            const todos = await response.json();
-            todos.forEach(todo => {
-                const li = document.createElement('li');
-                li.textContent = todo.text;
-                todoList.appendChild(li);
-            });
+        const name = document.createElement('h3');
+        name.textContent = comment.name;
+        card.appendChild(name);
 
-            form.addEventListener('submit', async (event) => {
-                event.preventDefault();
-                
-                const text = todoText.value;
-                if (!text) return;
+        const commentText = document.createElement('p');
+        commentText.classList.add('comment');
+        commentText.textContent = comment.comment;
+        card.appendChild(commentText);
 
-                const response = await fetch('/todos', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ text })
-                });
+        const rating = document.createElement('div');
+        rating.classList.add('rating');
+        rating.textContent = 'Rating: ';
+        for (let i = 0; i < comment.rating / 2; i++) {
+          const star = document.createElement('span');
+          star.textContent = '★';
+          rating.appendChild(star);
+        }
+        card.appendChild(rating);
 
-                if (response.ok) {
-                    const todo = await response.json();
-                    console.log(todo)
-                    console.log("Added succesfully")
-                    const li = document.createElement('li');
-                    li.textContent = todo.text;
-                    todoList.appendChild(li);
-                    todoText.value = '';
-                } else {
-                    console.error('Failed to add todo');
-                }
-            });
+        const deleteIcon = document.createElement('button');
+        deleteIcon.textContent = 'Delete';
+        deleteIcon.classList.add('delete-comment');
+        deleteIcon.addEventListener('click', async () => {
+          await deleteComment(comment._id);
+          card.remove();
         });
-    </script>
+        card.appendChild(deleteIcon);
+
+        const editIcon = document.createElement('button');
+        editIcon.textContent = 'Edit';
+        editIcon.classList.add('edit-comment');
+        editIcon.addEventListener('click', () => {
+          editComment(comment, card);
+        });
+        card.appendChild(editIcon);
+
+        return card;
+      }
+
+      async function deleteComment(commentId) {
+        const response = await fetch(`/comments/${commentId}`, {
+          method: 'DELETE'
+        });
+        if (response.ok) {
+          console.log("Comment deleted successfully");
+        } else {
+          console.error('Failed to delete comment');
+        }
+      }
+
+      async function editComment(comment, card) {
+        const newName = prompt("Enter your name:", comment.name);
+        const newComment = prompt("Enter your comment:", comment.comment);
+        const newRating = prompt("Enter your rating (0-10):", comment.rating);
+        if (newName !== null && newComment !== null && newRating !== null) {
+          const updatedComment = {
+            name: newName,
+            comment: newComment,
+            rating: parseInt(newRating)
+          };
+          const response = await fetch(`/comments/${comment._id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedComment)
+          });
+          if (response.ok) {
+            const updatedData = await response.json();
+            const updatedCard = createCommentCard(updatedData);
+            commentList.replaceChild(updatedCard, card);
+            console.log("Comment updated successfully");
+          } else {
+            console.error('Failed to update comment');
+          }
+        }
+      }
+      const loadComments = async () => {
+        const response = await fetch('/comments');
+        const comments = await response.json();
+        comments.forEach(comment => {
+          const card = createCommentCard(comment);
+          commentList.appendChild(card);
+        });
+      };
+
+      loadComments();
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const name = nameInput.value;
+        const comment = commentInput.value;
+        const rating = parseInt(ratingInput.value);
+
+        if (!name || !comment || isNaN(rating) || rating < 0 || rating > 10) {
+          alert("Please fill in all fields correctly.");
+          return;
+        }
+
+        const response = await fetch('/comments', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, comment, rating })
+        });
+
+        if (response.ok) {
+          const newComment = await response.json();
+          const card = createCommentCard(newComment);
+          commentList.appendChild(card);
+          nameInput.value = '';
+          commentInput.value = '';
+          ratingInput.value = '';
+          console.log("Comment added successfully");
+        } else {
+          console.error('Failed to add comment');
+        }
+      });
+    });
+  </script>
 
   <script src="js/script.js"></script>
 </body>
