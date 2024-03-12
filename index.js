@@ -6,7 +6,8 @@ const path = require('path');
 mongoose.connect('mongodb://mongo:27017/movie-comments', {
   useNewUrlParser: true,
   useUnifiedTopology: true
-});
+})
+
 
 const Comment = mongoose.model('Comment', { name: String, comment: String, rating: Number });
 
@@ -16,6 +17,10 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/db', (req, res) => {
+    mongoose.connection.readyState === 1 ? res.write('<h1>Connected to database!</h1>') : res.write('<h1>Not connected to database!</h1>');
 });
 
 app.get('/comments', async (req, res) => {
