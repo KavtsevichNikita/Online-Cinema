@@ -13,7 +13,6 @@ Online Cinema is a web application where users can browse movies, view ratings, 
 ## Getting Started
 
 This application using Node.js server and MongoDB database
-
 To run the application, you should have installed Docker.
 
 # Start application

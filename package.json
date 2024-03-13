@@ -4,7 +4,8 @@
   "description": "Simple cinema application with Node.js, Express, and MongoDB",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node start-app.js",
+    "end": "node end-app.js"
   },
   "keywords": [
     "cinema",

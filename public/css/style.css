@@ -228,3 +228,108 @@ option{
   padding: 24px 52px;
   text-decoration: none;
 }
+
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.form_container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-group input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.comment-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  position: relative;
+  height: 150px;
+}
+
+.comment-card h3 {
+  margin: 0;
+}
+
+.comment-card .comment {
+  margin-bottom: 10px;
+}
+
+.comment-card .rating {
+  margin-top: 10px;
+}
+
+.comment-card .rating span {
+  color: #f0a500;
+}
+
+.delete-comment {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.delete-comment:hover {
+  color: #fff;
+  background-color: red;
+}
+
+.edit-comment {
+  position: absolute;
+  top: 60px;
+  right: 5px;
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
